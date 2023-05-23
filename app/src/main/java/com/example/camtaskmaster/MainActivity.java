@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -15,18 +17,33 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> tasks = new ArrayList<>();  // List to hold tasks
+    private ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        String newTask = data.getStringExtra("newTask");
+                        tasks.add(newTask);
+
+                        TextView textViewTasks = findViewById(R.id.textViewTasks);
+                        textViewTasks.setText(TextUtils.join("\n", tasks));
+                    }
+                }
+        );
+
         Button buttonAddTask = findViewById(R.id.buttonAddTask);
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
-                startActivityForResult(intent, 1);
+                activityResultLauncher.launch(intent);
             }
         });
 
@@ -53,20 +70,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "All Tasks clicked", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if(resultCode == RESULT_OK){
-                String newTask = data.getStringExtra("newTask");
-                tasks.add(newTask);
-
-                TextView textViewTasks = findViewById(R.id.textViewTasks);
-                textViewTasks.setText(TextUtils.join("\n", tasks));
-            }
-        }
     }
 }
