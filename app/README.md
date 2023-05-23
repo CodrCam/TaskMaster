@@ -43,25 +43,25 @@ The "All Tasks" button on the homepage currently displays a placeholder message.
 
 ### App Home Screen
 
-![HomeScreen](assets/images/appHome.png)
+![HomeScreen](/app/images/appHome.png)
 
 ### ToDo Submit
 
-![HomeScreen](assets/images/toDoSubmit.png)
+![HomeScreen](/app/images/toDoSubmit.png)
 
 ### Full List for Tasks
 
-![HomeScreen](assets/images/toDoFull.png)
+![HomeScreen](/app/images/toDoFull.png)
 
 ### After Clicking 'Remove Task'
 
-![HomeScreen](assets/images/toDoFull.png)
+![HomeScreen](/app/images/toDoAfterDelete.png)
 
 You can see it removed the most recently added task
 
 ### Couple All Tasks button is clickable
 
-![AllTasks](assets/images/allTasks.png)
+![AllTasks](/app/images/allTasks.png)
 
 ## Future Work
 
@@ -69,4 +69,3 @@ You can see it removed the most recently added task
 * Add ability to edit existing tasks
 * Add task due dates and reminders
 * Add task categorization or tagging
-
