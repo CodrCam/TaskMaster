@@ -2,9 +2,10 @@ package com.example.camtaskmaster;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,33 +33,36 @@ public class MainActivity extends AppCompatActivity {
                         String newTask = data.getStringExtra("newTask");
                         tasks.add(newTask);
 
-                        TextView textViewTasks = findViewById(R.id.textViewTasks);
-                        textViewTasks.setText(TextUtils.join("\n", tasks));
+                        LinearLayout linearLayoutTasks = findViewById(R.id.linearLayoutTasks);
+                        linearLayoutTasks.removeAllViews(); // clear all tasks
+
+                        for (String task : tasks) {
+                            TextView textViewTask = new TextView(MainActivity.this);
+                            textViewTask.setText(task);
+                            textViewTask.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                            textViewTask.setOnClickListener(view -> {
+                                // replace with intent to start Task Detail activity when ready
+                                Toast.makeText(MainActivity.this, "Task clicked", Toast.LENGTH_SHORT).show();
+                            });
+
+                            linearLayoutTasks.addView(textViewTask);
+                        }
                     }
                 }
         );
 
         Button buttonAddTask = findViewById(R.id.buttonAddTask);
-        buttonAddTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
-                activityResultLauncher.launch(intent);
-            }
+        buttonAddTask.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
+            activityResultLauncher.launch(intent);
         });
 
-        Button buttonRemoveTask = findViewById(R.id.buttonRemoveTask);
-        buttonRemoveTask.setOnClickListener(new View.OnClickListener() {
+        Button buttonSettings = findViewById(R.id.buttonSettings);
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!tasks.isEmpty()) {
-                    tasks.remove(tasks.size() - 1);
-
-                    TextView textViewTasks = findViewById(R.id.textViewTasks);
-                    textViewTasks.setText(TextUtils.join("\n", tasks));
-                } else {
-                    Toast.makeText(MainActivity.this, "No tasks to remove", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -66,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
         buttonAllTasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace with intent to start All Tasks activity when ready
                 Toast.makeText(MainActivity.this, "All Tasks clicked", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

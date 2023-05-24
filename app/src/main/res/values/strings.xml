@@ -1,3 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">camTaskmaster</string>
+    <string name="app_name">CamTaskmaster</string>
+    <string name="enter_username">Enter your username</string>
+    <string name="save">Save</string>
+    <string name="settings">Settings</string>
 </resources>

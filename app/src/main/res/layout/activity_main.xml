@@ -7,62 +7,51 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textViewTaskMaster"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TaskMaster"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:padding="16dp"/>
-
-    <TextView
-        android:id="@+id/textViewMyTasks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Tasks"
-        android:textSize="20sp"
-        android:paddingTop="16dp"/>
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textViewTasks"
-            android:layout_width="match_parent"
+            android:id="@+id/textViewUserTasks"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Your Tasks Below :)" />
+            android:layout_centerVertical="true"
+            android:text="My tasks"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
 
-    </ScrollView>
+        <ImageView
+            android:id="@+id/imageViewSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="Settings"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_manage" />
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayoutTasks"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" />
+
+    <Button
+        android:id="@+id/buttonAddTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:text="Add task" />
 
-        <Button
-            android:id="@+id/buttonAddTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Task" />
+    <Button
+        android:id="@+id/buttonAllTasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All tasks" />
 
-        <Button
-            android:id="@+id/buttonRemoveTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remove Task" />
-
-        <Button
-            android:id="@+id/buttonAllTasks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="All Tasks" />
-    </LinearLayout>
-
-
+    <Button
+        android:id="@+id/buttonSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings" />
 </LinearLayout>
