@@ -3,5 +3,7 @@
     <string name="app_name">CamTaskmaster</string>
     <string name="enter_username">Enter your username</string>
     <string name="save">Save</string>
+    <string name="add_task">Add a new task</string>
     <string name="settings">Settings</string>
+    <string name="task_title">%1$s\'s tasks</string>
 </resources>
