@@ -3,15 +3,15 @@ package com.example.camtaskmaster;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -19,11 +19,22 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Task> tasks = new ArrayList<>();  // List to hold tasks
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    private TaskAdapter taskAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        RecyclerView taskRecyclerView = findViewById(R.id.taskRecyclerView);
+        taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        taskAdapter = new TaskAdapter(this, tasks, task -> {
+            Intent intent = new Intent(MainActivity.this, TaskDetailActivity.class);
+            intent.putExtra("taskTitle", task.getTitle());
+            intent.putExtra("taskDetail", task.getDetails());
+            startActivity(intent);
+        });
+        taskRecyclerView.setAdapter(taskAdapter);
 
         // Assign the value to activityResultLauncher
         activityResultLauncher = registerForActivityResult(
@@ -35,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         String newTaskDetail = data.getStringExtra("newTaskDetail");
                         tasks.add(new Task(newTask, newTaskDetail));
 
-                        displayTasks();
+                        taskAdapter.notifyDataSetChanged();
                     }
 
                 }
@@ -52,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
-
-        displayTasks();
     }
 
     @Override
@@ -65,26 +74,5 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textViewTitle = findViewById(R.id.textViewTitle);
         textViewTitle.setText(getString(R.string.task_title, username));
-
-        displayTasks();
-    }
-
-    private void displayTasks() {
-        LinearLayout linearLayoutTasks = findViewById(R.id.linearLayoutTasks);
-        linearLayoutTasks.removeAllViews(); // clear all tasks
-
-        for (Task task : tasks) {
-            TextView textViewTask = new TextView(MainActivity.this);
-            textViewTask.setText(task.getTitle());
-            textViewTask.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            textViewTask.setOnClickListener(v -> {
-                Intent intent = new Intent(MainActivity.this, TaskDetailActivity.class);
-                intent.putExtra("taskTitle", task.getTitle());
-                intent.putExtra("taskDetail", task.getDetails()); // corrected here
-                startActivity(intent);
-            });
-
-            linearLayoutTasks.addView(textViewTask);
-        }
     }
 }
