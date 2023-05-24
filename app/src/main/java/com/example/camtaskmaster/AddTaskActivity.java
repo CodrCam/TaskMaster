@@ -22,8 +22,12 @@ public class AddTaskActivity extends AppCompatActivity {
                 EditText editTextTask = findViewById(R.id.editTextTask);
                 String newTask = editTextTask.getText().toString();
 
+                EditText editTextTaskDetail = findViewById(R.id.editTextTaskDetail);
+                String newTaskDetail = editTextTaskDetail.getText().toString();
+
                 Intent intent = new Intent();
                 intent.putExtra("newTask", newTask);
+                intent.putExtra("newTaskDetail", newTaskDetail);
                 setResult(RESULT_OK, intent);
 
                 finish();

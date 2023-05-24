@@ -9,15 +9,27 @@
         android:id="@+id/editTextTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:layout_centerInParent="true"
+        android:hint="Task Title"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editTextTaskDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextTask"
+        android:layout_marginTop="20dp"
+        android:hint="Task Details"
         android:inputType="text" />
 
     <Button
         android:id="@+id/buttonSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTask"
+        android:layout_below="@+id/editTextTaskDetail"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="Submit" />
 
 </RelativeLayout>
