@@ -57,11 +57,11 @@ Users can navigate to the settings page by clicking on the settings icon on the 
 
 ### YouTube Link Lab 27
 
-[![TaskMaster Lab27 Demo](/Users/camerongriffin/projects/courses/401/taskmaster/app/src/main/res/drawable/youtubeLogo.png)](https://youtu.be/voWokXM5zWI)
+[![TaskMaster Lab27 Demo](https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Youtube_colored_svg-512.png)](https://youtu.be/voWokXM5zWI)
 
 ### YouTube Link Lab 28
 
-[![TaskMaster Lab28 Demo](/Users/camerongriffin/projects/courses/401/taskmaster/app/src/main/res/drawable/youtubeLogo.png)](https://youtu.be/m6KUt6ONrR4)
+[![TaskMaster Lab28 Demo](https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Youtube_colored_svg-512.png)](https://youtu.be/m6KUt6ONrR4)
 
 ## Future Work
 
