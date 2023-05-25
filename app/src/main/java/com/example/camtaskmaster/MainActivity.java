@@ -1,5 +1,6 @@
 package com.example.camtaskmaster;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,25 +29,34 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         setContentView(R.layout.activity_main);
 
         taskRecyclerView = findViewById(R.id.taskRecyclerView);
-        taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Assign the value to activityResultLauncher
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    Intent data = result.getData();
-                    if (data != null) {
-                        String newTask = data.getStringExtra("newTask");
-                        String newTaskDetail = data.getStringExtra("newTaskDetail");
-                        tasks.add(new Task(newTask, newTaskDetail));
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            String newTask = data.getStringExtra("newTask");
+                            String newTaskDetail = data.getStringExtra("newTaskDetail");
+                            tasks.add(new Task(newTask, newTaskDetail));
 
-                        taskAdapter.notifyDataSetChanged(); // Notify the adapter about the change
+                            taskAdapter.notifyDataSetChanged(); // Notify the adapter about the change
+
+                            // *******Debugging: print out the task entered by user******
+                            for (Task task : tasks) {
+                                System.out.println("Task: " + task.getTitle() + ", Detail: " + task.getDetails());
+                            }
+                        }
                     }
                 }
         );
 
+
         taskAdapter = new TaskAdapter(this, tasks, this);
         taskRecyclerView.setAdapter(taskAdapter);
+
+        taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Button buttonAddTask = findViewById(R.id.buttonAddTask);
         buttonAddTask.setOnClickListener(v -> {
@@ -60,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             startActivity(intent);
         });
     }
-
 
     @Override
     protected void onResume() {
@@ -80,5 +89,15 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         intent.putExtra("taskDetail", task.getDetails());
         intent.putExtra("taskStatus", task.getStatus());
         startActivity(intent);
+    }
+
+    @Override
+    public void onDoingClick(Task task) {
+        taskAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDoneClick(Task task) {
+        taskAdapter.notifyDataSetChanged();
     }
 }
