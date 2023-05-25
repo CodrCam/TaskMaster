@@ -58,6 +58,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         public void bind(final Task task, final OnTaskClickListener listener) {
             textViewTask.setText(task.getTitle());
+
+            textViewTask.setOnClickListener(view -> listener.onTaskClick(task));
+
             buttonMarkAsDoing.setOnClickListener(view -> {
                 // Update the task status to "doing"
                 task.setStatus("doing");
@@ -70,5 +73,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 listener.onTaskClick(task);
             });
         }
+
     }
 }
