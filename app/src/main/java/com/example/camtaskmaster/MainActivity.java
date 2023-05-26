@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTaskClickListener {
 
@@ -39,18 +40,28 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                         if (data != null) {
                             String newTask = data.getStringExtra("newTask");
                             String newTaskDetail = data.getStringExtra("newTaskDetail");
-                            tasks.add(new Task(newTask, newTaskDetail));
+
+                            Task task = new Task(newTask, newTaskDetail);
+                            tasks.add(task);
+
+                            // Get instance of database
+                            AppDatabase db = DatabaseClient.getInstance(this).getAppDatabase();
+
+                            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Persist the task to the database
+                                    db.taskDao().insert(task);
+                                }
+                            });
 
                             taskAdapter.notifyDataSetChanged(); // Notify the adapter about the change
 
-                            // *******Debugging: print out the task entered by user******
-                            for (Task task : tasks) {
-                                System.out.println("Task: " + task.getTitle() + ", Detail: " + task.getDetails());
-                            }
                         }
                     }
                 }
         );
+
 
 
         taskAdapter = new TaskAdapter(this, tasks, this);
