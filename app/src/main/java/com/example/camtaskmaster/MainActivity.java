@@ -52,15 +52,22 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                                     .title(newTask)
                                     .details(newTaskDetail)
                                     .build();
-                            tasks.add(task);
 
                             Amplify.DataStore.save(task,
                                     success -> {
-                                        runOnUiThread(() -> taskAdapter.notifyDataSetChanged());
+                                        runOnUiThread(() -> {
+                                            tasks.add(task);
+                                            taskAdapter.notifyDataSetChanged();
+                                        });
                                         System.out.println("Saved item: " + task.getTitle());
                                     },
-                                    error -> System.out.println("Could not save item to DataStore: " + error)
+                                    error -> {
+                                        System.out.println("Could not save item to DataStore: " + error);
+                                        error.printStackTrace();
+                                    }
                             );
+
+
                         }
                     }
                 }

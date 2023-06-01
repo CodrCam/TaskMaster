@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 
 import java.util.ArrayList;
@@ -89,6 +90,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 taskStatusIcon.setImageResource(R.drawable.rocket_launch);
                 System.out.println("Marked as doing: " + task.getTitle());  // Logging here
                 listener.onDoingClick(task);
+
+                Amplify.DataStore.save(task,
+                        success -> Log.i("TaskAdapter", "Updated task to 'doing': " + task.getTitle()),
+                        error -> Log.e("TaskAdapter", "Could not update task to 'doing': " + error)
+                );
             });
 
             buttonMarkAsDone.setOnClickListener(view -> {
@@ -98,7 +104,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 taskStatusIcon.setImageResource(R.drawable.check_circle);
                 System.out.println("Marked as done: " + task.getTitle());  // Logging here
                 listener.onDoneClick(task);
+
+                Amplify.DataStore.save(task,
+                        success -> Log.i("TaskAdapter", "Updated task to 'done': " + task.getTitle()),
+                        error -> Log.e("TaskAdapter", "Could not update task to 'done': " + error)
+                );
             });
+
         }
 
 
