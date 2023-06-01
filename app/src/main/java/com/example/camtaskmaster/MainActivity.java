@@ -14,8 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Task;
+
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTaskClickListener {
 
@@ -41,28 +43,30 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                             String newTask = data.getStringExtra("newTask");
                             String newTaskDetail = data.getStringExtra("newTaskDetail");
 
-                            Task task = new Task(newTask, newTaskDetail);
-                            tasks.add(task);
+                            Task task = Task.builder()
+                                    .title(newTask)
+                                    .details(newTaskDetail)
+                                    .build();
 
-                            // Get instance of database
-                            AppDatabase db = DatabaseClient.getInstance(this).getAppDatabase();
+                            Amplify.DataStore.save(task,
+                                    success -> {
+                                        runOnUiThread(() -> {
+                                            tasks.add(task);
+                                            taskAdapter.notifyDataSetChanged();
+                                        });
+                                        System.out.println("Saved item: " + task.getTitle());
+                                    },
+                                    error -> {
+                                        System.out.println("Could not save item to DataStore: " + error);
+                                        error.printStackTrace();
+                                    }
+                            );
 
-                            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // Persist the task to the database
-                                    db.taskDao().insert(task);
-                                }
-                            });
-
-                            taskAdapter.notifyDataSetChanged(); // Notify the adapter about the change
 
                         }
                     }
                 }
         );
-
-
 
         taskAdapter = new TaskAdapter(this, tasks, this);
         taskRecyclerView.setAdapter(taskAdapter);
@@ -94,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
     }
 
     @Override
-    public void onTaskClick(Task task) {
+    public void onTaskClick(com.amplifyframework.datastore.generated.model.Task task) {
         Intent intent = new Intent(this, TaskDetailActivity.class);
         intent.putExtra("taskTitle", task.getTitle());
         intent.putExtra("taskDetail", task.getDetails());
@@ -103,12 +107,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
     }
 
     @Override
-    public void onDoingClick(Task task) {
+    public void onDoingClick(com.amplifyframework.datastore.generated.model.Task task) {
         taskAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onDoneClick(Task task) {
+    public void onDoneClick(com.amplifyframework.datastore.generated.model.Task task) {
         taskAdapter.notifyDataSetChanged();
     }
 }
