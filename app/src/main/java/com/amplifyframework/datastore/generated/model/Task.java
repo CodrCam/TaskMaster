@@ -8,7 +8,10 @@ import java.util.Objects;
 
 import androidx.core.util.ObjectsCompat;
 
+import com.amplifyframework.core.model.AuthStrategy;
 import com.amplifyframework.core.model.Model;
+import com.amplifyframework.core.model.ModelOperation;
+import com.amplifyframework.core.model.annotations.AuthRule;
 import com.amplifyframework.core.model.annotations.Index;
 import com.amplifyframework.core.model.annotations.ModelConfig;
 import com.amplifyframework.core.model.annotations.ModelField;
@@ -18,16 +21,18 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
 /** This is an auto generated class representing the Task type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "Tasks", type = Model.Type.USER, version = 1)
+@ModelConfig(pluralName = "Tasks", type = Model.Type.USER, version = 1, authRules = {
+  @AuthRule(allow = AuthStrategy.PUBLIC, operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
+})
 public final class Task implements Model {
   public static final QueryField ID = field("Task", "id");
   public static final QueryField TITLE = field("Task", "title");
   public static final QueryField DETAILS = field("Task", "details");
   public static final QueryField STATUS = field("Task", "status");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String", isRequired = true) String title;
-  private final @ModelField(targetType="String", isRequired = true) String details;
-  private final @ModelField(targetType="String", isRequired = true) String status;
+  private final @ModelField(targetType="String") String title;
+  private final @ModelField(targetType="String") String details;
+  private final @ModelField(targetType="String") String status;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String resolveIdentifier() {
@@ -109,7 +114,7 @@ public final class Task implements Model {
       .toString();
   }
   
-  public static TitleStep builder() {
+  public static BuildStep builder() {
       return new Builder();
   }
   
@@ -140,30 +145,16 @@ public final class Task implements Model {
     public void setStatus(String doing) {
     }
 
-    public interface TitleStep {
-    DetailsStep title(String title);
-  }
-  
-
-  public interface DetailsStep {
-    StatusStep details(String details);
-  }
-  
-
-  public interface StatusStep {
-    BuildStep status(String status);
-
-      Task build();
-  }
-  
-
-  public interface BuildStep {
+    public interface BuildStep {
     Task build();
     BuildStep id(String id);
+    BuildStep title(String title);
+    BuildStep details(String details);
+    BuildStep status(String status);
   }
   
 
-  public static class Builder implements TitleStep, DetailsStep, StatusStep, BuildStep {
+  public static class Builder implements BuildStep {
     private String id;
     private String title;
     private String details;
@@ -180,22 +171,19 @@ public final class Task implements Model {
     }
     
     @Override
-     public DetailsStep title(String title) {
-        Objects.requireNonNull(title);
+     public BuildStep title(String title) {
         this.title = title;
         return this;
     }
     
     @Override
-     public StatusStep details(String details) {
-        Objects.requireNonNull(details);
+     public BuildStep details(String details) {
         this.details = details;
         return this;
     }
     
     @Override
      public BuildStep status(String status) {
-        Objects.requireNonNull(status);
         this.status = status;
         return this;
     }

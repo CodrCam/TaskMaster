@@ -16,13 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
-import android.app.Application;
-import android.util.Log;
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.datastore.AWSDataStorePlugin;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTaskClickListener {
 

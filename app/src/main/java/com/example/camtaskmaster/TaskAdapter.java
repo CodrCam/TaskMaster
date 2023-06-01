@@ -22,6 +22,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private Context context;
     private OnTaskClickListener onTaskClickListener;
 
+    public TaskAdapter(MainActivity activity, ArrayList<Task> tasks, MainActivity onTaskClickListener) {
+
+    }
+
     public interface OnTaskClickListener {
         void onTaskClick(Task task);
         void onDoingClick(Task task);
