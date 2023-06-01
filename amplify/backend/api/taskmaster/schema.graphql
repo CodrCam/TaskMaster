@@ -1,0 +1,10 @@
+enum Priority {
+  HIGH
+}
+
+type Task @model {
+  id: ID!
+  title: String!
+  details: String!
+  status: String!
+}
