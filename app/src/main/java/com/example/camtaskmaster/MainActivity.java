@@ -24,14 +24,13 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
     ArrayList<Task> tasks = new ArrayList<>();  // List to hold tasks
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private TaskAdapter taskAdapter;
-    private RecyclerView taskRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        taskRecyclerView = findViewById(R.id.taskRecyclerView);
+        RecyclerView taskRecyclerView = findViewById(R.id.taskRecyclerView);
 
         // Assign the value to activityResultLauncher
         activityResultLauncher = registerForActivityResult(

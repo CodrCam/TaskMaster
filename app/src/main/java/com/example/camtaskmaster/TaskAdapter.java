@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private ArrayList<Task> tasks;
-    private Context context;
     private OnTaskClickListener onTaskClickListener;
 
     public TaskAdapter(MainActivity activity, ArrayList<Task> tasks, MainActivity onTaskClickListener) {
@@ -33,11 +32,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     }
 
     public TaskAdapter(Context context, ArrayList<Task> tasks, OnTaskClickListener onTaskClickListener) {
-        this.context = context;
         this.tasks = tasks;
         this.onTaskClickListener = onTaskClickListener;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
@@ -55,7 +54,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return tasks.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewTask;
         Button buttonMarkAsDoing, buttonMarkAsDone;
         ImageView taskStatusIcon;
