@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
-import com.example.camtaskmaster.R;
+import com.taskApp.camtaskmaster.R;
+
 
 import java.util.ArrayList;
 

@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
-import com.example.camtaskmaster.R;
+import com.taskApp.camtaskmaster.R;
+
 
 import java.util.ArrayList;
 
@@ -22,9 +23,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private ArrayList<Task> tasks;
     private OnTaskClickListener onTaskClickListener;
 
-    public TaskAdapter(MainActivity activity, ArrayList<Task> tasks, MainActivity onTaskClickListener) {
-
-    }
 
     public interface OnTaskClickListener {
         void onTaskClick(Task task);
@@ -71,18 +69,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         public void bind(final Task task, final OnTaskClickListener listener) {
             textViewTask.setText(task.getTitle());
 
-            // Reset task status icon
-            switch (task.getStatus()) {
-                case "doing":
-                    taskStatusIcon.setVisibility(View.VISIBLE);
-                    taskStatusIcon.setImageResource(R.drawable.rocket_launch);
-                    break;
-                case "done":
-                    taskStatusIcon.setVisibility(View.VISIBLE);
-                    taskStatusIcon.setImageResource(R.drawable.check_circle);
-                    break;
-                default:
-                    taskStatusIcon.setVisibility(View.GONE);
+            String status = task.getStatus();
+            // Check if status is null before using it in the switch statement
+            if (status != null) {
+                // Reset task status icon
+                switch (status) {
+                    case "doing":
+                        taskStatusIcon.setVisibility(View.VISIBLE);
+                        taskStatusIcon.setImageResource(R.drawable.rocket_launch);
+                        break;
+                    case "done":
+                        taskStatusIcon.setVisibility(View.VISIBLE);
+                        taskStatusIcon.setImageResource(R.drawable.check_circle);
+                        break;
+                    default:
+                        taskStatusIcon.setVisibility(View.GONE);
+                }
+            } else {
+                // Handle the case when status is null if needed
+                taskStatusIcon.setVisibility(View.GONE);
             }
 
             textViewTask.setOnClickListener(v -> listener.onTaskClick(task));
@@ -114,8 +119,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                         error -> Log.e("TaskAdapter", "Could not update task to 'done': " + error)
                 );
             });
-
         }
+
 
 
 
