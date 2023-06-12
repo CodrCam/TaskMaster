@@ -8,7 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.camtaskmaster.R;
+import com.taskApp.camtaskmaster.R;
+
 
 public class SettingsActivity extends AppCompatActivity {
 

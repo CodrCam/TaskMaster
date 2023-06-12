@@ -60,6 +60,11 @@ Users can navigate to the settings page by clicking on the settings icon on the 
 * Refactored the task list to load tasks from the database
 * Ensured task status updates are reflected in the database
 
+### Jun 12, 2023
+
+* Made small hot fixes
+* Added to Google Play Store
+
 ## Demos
 
 ### YouTube Link Lab 27

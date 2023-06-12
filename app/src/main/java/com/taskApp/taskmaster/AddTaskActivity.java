@@ -7,7 +7,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.camtaskmaster.R;
+import com.taskApp.camtaskmaster.R;
+
 
 public class AddTaskActivity extends AppCompatActivity {
 

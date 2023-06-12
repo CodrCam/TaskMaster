@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.camtaskmaster.R;
+import com.taskApp.camtaskmaster.R;
 
 
 public class TaskViewHolder extends RecyclerView.ViewHolder {
