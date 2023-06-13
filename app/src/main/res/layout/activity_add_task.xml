@@ -23,11 +23,18 @@
         android:hint="Task Details"
         android:inputType="text" />
 
+    <Spinner
+        android:id="@+id/teamSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextTaskDetail"
+        android:layout_marginTop="20dp" />
+
     <Button
         android:id="@+id/buttonSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTaskDetail"
+        android:layout_below="@+id/teamSpinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="Submit" />
