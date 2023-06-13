@@ -10,6 +10,11 @@
       "StackName": "amplify-amplifytaskmasterdev-staging-35242",
       "StackId": "arn:aws:cloudformation:us-west-2:388994966871:stack/amplify-amplifytaskmasterdev-staging-35242/c2dbc630-002f-11ee-affe-026627612327",
       "AmplifyAppId": "d32dfzwq0kfhwt"
+    },
+    "categories": {
+      "api": {
+        "amplifytaskmasterdev153044": {}
+      }
     }
   },
   "dev": {

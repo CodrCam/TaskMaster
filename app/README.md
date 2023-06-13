@@ -2,7 +2,7 @@
 
 ## Overview
 
-TaskMaster is an Android application that allows users to manage their tasks. Users can add tasks, view tasks, and track the status of tasks. All task data is now persisted in a local database using Room.
+TaskMaster is an Android application that allows users to manage their tasks. Users can add tasks, view tasks, track the status of tasks, and assign them to specific teams. All task data is now persisted in a local database using Room and AWS Amplify.
 
 This application was developed using Java and XML in Android Studio.
 
@@ -20,7 +20,7 @@ The homepage of the application displays a list of current tasks, persisted in a
 
 ### Add a Task
 
-Users can add a new task by clicking the "Add Task" button on the homepage. This will open a new page where users can type in the title and body of the new task. Clicking the "Save" button will add the task to the list and the database, then return the user to the homepage.
+Users can add a new task by clicking the "Add Task" button on the homepage. This will open a new page where users can type in the title and body of the new task, and select the team it belongs to from a dropdown menu. Clicking the "Submit" button will add the task to the list and the database, then return the user to the homepage.
 
 ### Update Task Status
 
@@ -65,6 +65,12 @@ Users can navigate to the settings page by clicking on the settings icon on the 
 * Made small hot fixes
 * Added to Google Play Store
 
+### Jun 13, 20023
+
+* Added teams one to many feature
+* Updated the Add Task page with a spinner menu to select teams for tasks
+* Persisted the team data using AWS Amplify
+
 ## Demos
 
 ### YouTube Link Lab 27
@@ -91,4 +97,3 @@ Users can navigate to the settings page by clicking on the settings icon on the 
 * Implement "All Tasks" page
 * Add ability to remove tasks from task details page
 * Add task due dates and reminders
-* Add task categorization or tagging

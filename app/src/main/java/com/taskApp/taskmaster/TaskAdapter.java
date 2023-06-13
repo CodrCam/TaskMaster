@@ -16,13 +16,11 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.taskApp.camtaskmaster.R;
 
-
 import java.util.ArrayList;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private ArrayList<Task> tasks;
     private OnTaskClickListener onTaskClickListener;
-
 
     public interface OnTaskClickListener {
         void onTaskClick(Task task);
@@ -45,7 +43,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Task task = tasks.get(position);
-        holder.bind(task, onTaskClickListener);
+        holder.bind(task, onTaskClickListener, position);
     }
 
     @Override
@@ -53,7 +51,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return tasks.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewTask;
         Button buttonMarkAsDoing, buttonMarkAsDone;
         ImageView taskStatusIcon;
@@ -66,13 +64,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             taskStatusIcon = itemView.findViewById(R.id.taskStatusIcon);
         }
 
-        public void bind(final Task task, final OnTaskClickListener listener) {
+        public void bind(final Task task, final OnTaskClickListener listener, final int position) {
             textViewTask.setText(task.getTitle());
 
             String status = task.getStatus();
-            // Check if status is null before using it in the switch statement
             if (status != null) {
-                // Reset task status icon
                 switch (status) {
                     case "doing":
                         taskStatusIcon.setVisibility(View.VISIBLE);
@@ -86,44 +82,44 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                         taskStatusIcon.setVisibility(View.GONE);
                 }
             } else {
-                // Handle the case when status is null if needed
                 taskStatusIcon.setVisibility(View.GONE);
             }
 
             textViewTask.setOnClickListener(v -> listener.onTaskClick(task));
 
             buttonMarkAsDoing.setOnClickListener(view -> {
-                // Update the task status to "doing"
-                task.setStatus("doing");
+                Task updatedTask = task.copyOfBuilder().status("doing").build();
+                tasks.set(position, updatedTask);
                 taskStatusIcon.setVisibility(View.VISIBLE);
                 taskStatusIcon.setImageResource(R.drawable.rocket_launch);
-                System.out.println("Marked as doing: " + task.getTitle());  // Logging here
-                listener.onDoingClick(task);
+                Log.i("TaskAdapter", "Marked as doing: " + updatedTask.getTitle());
+                listener.onDoingClick(updatedTask);
 
-                Amplify.DataStore.save(task,
-                        success -> Log.i("TaskAdapter", "Updated task to 'doing': " + task.getTitle()),
+                Amplify.DataStore.save(updatedTask,
+                        success -> {
+                            Log.i("TaskAdapter", "Updated task to 'doing': " + updatedTask.getTitle());
+                            notifyItemChanged(position);
+                        },
                         error -> Log.e("TaskAdapter", "Could not update task to 'doing': " + error)
                 );
             });
 
             buttonMarkAsDone.setOnClickListener(view -> {
-                // Update the task status to "done"
-                task.setStatus("done");
+                Task updatedTask = task.copyOfBuilder().status("done").build();
+                tasks.set(position, updatedTask);
                 taskStatusIcon.setVisibility(View.VISIBLE);
                 taskStatusIcon.setImageResource(R.drawable.check_circle);
-                System.out.println("Marked as done: " + task.getTitle());  // Logging here
-                listener.onDoneClick(task);
+                Log.i("TaskAdapter", "Marked as done: " + updatedTask.getTitle());
+                listener.onDoneClick(updatedTask);
 
-                Amplify.DataStore.save(task,
-                        success -> Log.i("TaskAdapter", "Updated task to 'done': " + task.getTitle()),
+                Amplify.DataStore.save(updatedTask,
+                        success -> {
+                            Log.i("TaskAdapter", "Updated task to 'done': " + updatedTask.getTitle());
+                            notifyItemChanged(position);
+                        },
                         error -> Log.e("TaskAdapter", "Could not update task to 'done': " + error)
                 );
             });
         }
-
-
-
-
     }
 }
-
